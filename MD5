@@ -1,7 +1,7 @@
-1a1bbf0ee5ae41dd3e05800719601bb7 *DESCRIPTION
+c81d83486f6b04809e777f3b2877b65c *DESCRIPTION
 8d23d0a117c2c10ccc607f63306b4e33 *LICENSE
 2b2312d9327510095bcf5a002ceb0afd *NAMESPACE
-a60ffc5c9dbfc40e9aa6e7d7d6f78bae *NEWS.md
+d60f90341cbeba58414896ed90a495c8 *NEWS.md
 a8b68e5b7f9365d5c9752b78081d4180 *R/fake_df.R
 d8878e2dd92ef4e4168fe3e0039f8e6b *R/geom_fan.R
 c31c8c85c398d01f3c1ec258744152af *R/ggfan.R
@@ -14,10 +14,10 @@ a22be85aa35c5403f92f95a76ae31b23 *data/fake_df.rda
 13ba7eae8a95f5be4958e7d08599cb0f *data/gp_model_fit.rda
 975e2ada89b32e271c50512fbcb50f62 *inst/doc/geom_fan.R
 b5a7e788877e6f23c62012ce423e8205 *inst/doc/geom_fan.Rmd
-6cd3dca71df6e886a1d4b5852bdf2d3c *inst/doc/geom_fan.html
+6c509b92aecaed944d969b610a0815c1 *inst/doc/geom_fan.html
 22febd81f40cad8288fd05968dc85e93 *inst/doc/ggfan_stan.R
 64497bee6921b6b430554147975a6266 *inst/doc/ggfan_stan.Rmd
-1088a37501f864001d8b34d26ea72d03 *inst/doc/ggfan_stan.html
+b8f2ca62fa0d7faa43b919fb7ae05607 *inst/doc/ggfan_stan.html
 a8d7b77d783ea388cd13f3b6fed0dfe1 *inst/stan/latent_gp_pois.stan
 7ff78f1c6de6e9c036322277b505f1b5 *man/GeomIntervalPath.Rd
 303561d7a7f0606476cedcfbfc62e215 *man/GeomIntervalPoly.Rd
