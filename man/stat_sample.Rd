@@ -3,7 +3,7 @@
 \name{stat_sample}
 \alias{stat_sample}
 \title{Plots a randomly chosen sample of the specified groups using
-\code{\link[ggplot2]{geom_line}}}
+\code{\link[ggplot2:geom_path]{geom_line}}}
 \usage{
 stat_sample(mapping = NULL, data = NULL, stat = "sample",
   position = "identity", na.rm = FALSE, show.legend = F,
@@ -60,5 +60,5 @@ to the paired geom/stat.}
 }
 \description{
 Plots a randomly chosen sample of the specified groups using
-\code{\link[ggplot2]{geom_line}}
+\code{\link[ggplot2:geom_path]{geom_line}}
 }

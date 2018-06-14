@@ -55,7 +55,7 @@ to the paired geom/stat.}
 }
 \description{
 Very similar to \code{\link{geom_interval}}, except uses
-\code{\link[ggplot2]{geom_line}} to handle the plotting. This makes handling
+\code{\link[ggplot2:geom_path]{geom_line}} to handle the plotting. This makes handling
 plotting of intervals for several groups difficult to achieve, so
 \code{\link{geom_interval}} is preferred.
 }
