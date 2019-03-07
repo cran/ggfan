@@ -1,23 +1,20 @@
 Using ggfan with stan
 ================
 Jason Hilton
-2017-11-14
+2019-03-06
 
 ``` r
 library(rstan)
 ```
 
-    ## Warning: package 'rstan' was built under R version 3.4.1
-
     ## Loading required package: StanHeaders
 
-    ## Warning: package 'StanHeaders' was built under R version 3.4.1
-
-    ## rstan (Version 2.16.2, packaged: 2017-07-03 09:24:58 UTC, GitRev: 2e1f913d3ca3)
+    ## rstan (Version 2.18.2, GitRev: 2e1f913d3ca3)
 
     ## For execution on a local, multicore CPU with excess RAM we recommend calling
+    ## options(mc.cores = parallel::detectCores()).
+    ## To avoid recompilation of unchanged Stan programs, we recommend calling
     ## rstan_options(auto_write = TRUE)
-    ## options(mc.cores = parallel::detectCores())
 
     ## 
     ## Attaching package: 'rstan'
@@ -35,11 +32,7 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 library(tibble)
-```
 
-    ## Warning: package 'tibble' was built under R version 3.4.2
-
-``` r
 library(ggfan)
 ```
 
@@ -64,7 +57,7 @@ points(x,y[,2])
 
 The stan model used is a modified version of the Gaussian Process (GP) examples bundled with `rstan`, and is also based on the latent-variable discussion in the Bayesian Data Anaylsis edition 3 (Gelman et al. 2015). GPs are semi-parametric models based on the assumption that outcomes are joint multivariate normal, and that observations that are close to each other in terms of their covariate values are correlated in outputs.
 
-The model is given below. The details are not especially important for this purpose, but for those familiar with GPs, the roughness and variance parameters are estimated as part of themodel, but a small fixed nugget is added to the diagonal to avoid numerical problems. The model can be compiled by saving the code below in a text file and reading in using `stan_model(file="path/to/model.stan")`.
+The model is given below. The details are not especially important for this purpose, but for those familiar with GPs, the roughness and variance parameters are estimated as part of the model, but a small fixed nugget is added to the diagonal to avoid numerical problems. The model can be compiled by saving the code below in a text file and reading in using `stan_model(file="path/to/model.stan")`.
 
 ``` stan
 data {
@@ -121,7 +114,7 @@ We can fit the model using the `sampling` command. This make take some time. The
 gp_model_fit <- sampling(compiled_model, data=stan_data, iter=3000,thin=6)
 ```
 
-We can get an idea as to whether the samples have converged by examining the $\\hat{r}$ (link)\[<http://www.stat.columbia.edu/~gelman/research/published/itsim.pdf>\] diagnostic values. Values close to 1 indicate good convergence.
+We can get an idea as to whether the samples have converged by examining the *r̂* (link)\[<http://www.stat.columbia.edu/~gelman/research/published/itsim.pdf>\] diagnostic values. Values close to 1 indicate good convergence.
 
 ``` r
 stan_rhat(gp_model_fit)
@@ -136,7 +129,10 @@ We now want to convert the stan output to values that can be easily plotted usin
 Next, we convert to tidy data format using the `tidyr` function `gather`. And now we are ready to plot with `ggfan`.
 
 ``` r
-z_df <- as_tibble(t(as.matrix(gp_model_fit, "z")))
+z_samp_mat <- t(as.matrix(gp_model_fit, "z"))
+# give names (as_tibble complains if you don't!)
+colnames(z_samp_mat) <- paste0("Sim", 1:dim(z_samp_mat)[2])
+z_df <- as_tibble(z_samp_mat)
 z_df <- z_df %>% mutate(x=x)
 
 z_df_long <- z_df %>% gather(key=Sim, value=z, -x)
@@ -150,7 +146,9 @@ ggplot(z_df_long, aes(x=x,y=z)) + geom_fan() + geom_line(data=data.frame(x=x,y=s
 We can also follow the same process in order to examine the predictive distribution of the counts themselves. These are integers so naturally appear more discrete.
 
 ``` r
-y_df <- as_tibble(t(as.matrix(gp_model_fit, "y_gen")))
+y_samp_mat <- t(as.matrix(gp_model_fit, "y_gen"))
+colnames(y_samp_mat) <- paste0("Sim", 1:dim(y_samp_mat)[2])
+y_df <- as_tibble(y_samp_mat)
 y_df <- y_df %>% mutate(x=x)
 
 y_df_long <- y_df %>% gather(key=Sim, value=y, -x)
@@ -163,4 +161,4 @@ ggplot(y_df_long, aes(x=x,y=y)) + geom_fan() +
 
 ![](ggfan_stan_files/figure-markdown_github/observations-1.png)
 
-A similar process can be folowed when using other MCMC sampling packages, such as `bugs` or `jags`.
+A similar process can be followed when using other MCMC sampling packages, such as `bugs` or `jags`.

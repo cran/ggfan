@@ -1,7 +1,7 @@
 Using ggfan to plot a distribution
 ================
 Jason Hilton
-2017-11-14
+2019-03-06
 
 Introduction
 ============
@@ -18,8 +18,6 @@ library(magrittr)
 library(tidyr)
 ```
 
-    ## Warning: package 'tidyr' was built under R version 3.4.2
-
     ## 
     ## Attaching package: 'tidyr'
 
@@ -30,8 +28,6 @@ library(tidyr)
 ``` r
 library(dplyr)
 ```
-
-    ## Warning: package 'dplyr' was built under R version 3.4.2
 
     ## 
     ## Attaching package: 'dplyr'
@@ -72,24 +68,22 @@ fake_df <- data.frame(x=time, t(fake_data)) %>% gather(key=Sim, value=y, -x)
 head(fake_df)
 ```
 
-    ##   x Sim         y
-    ## 1 1  X1 1.3948458
-    ## 2 2  X1 1.2918445
-    ## 3 3  X1 1.0502027
-    ## 4 4  X1 1.1772656
-    ## 5 5  X1 0.8996833
-    ## 6 6  X1 3.2891427
+    ##   x Sim          y
+    ## 1 1  X1  1.6572459
+    ## 2 2  X1  0.8267447
+    ## 3 3  X1 -0.8102278
+    ## 4 4  X1  3.0413644
+    ## 5 5  X1  6.3048493
+    ## 6 6  X1  3.9750555
 
 Now that we have a data set, let's visualise it using `ggfan`.
 
-Firstly, we can summarise the distribution by ploting lines connecting upper and lower boundaries of central probability intervals using `stat_interval`. This calculates the intervals, and by default associates these with the `linetype` aesthetic. The precise intervals to be plotted can be specified. The 'zero' interval here describes the median.
+Firstly, we can summarise the distribution by plotting lines connecting upper and lower boundaries of central probability intervals using `stat_interval`. This calculates the intervals, and by default associates these with the `linetype` aesthetic. The precise intervals to be plotted can be specified. The 'zero' interval here describes the median.
 
 ``` r
 p <- ggplot(fake_df, aes(x=x,y=y)) + geom_interval()
 print(p)
 ```
-
-    ## Warning: package 'bindrcpp' was built under R version 3.4.1
 
 ![](geom_fan_files/figure-markdown_github/plot_stat_interval-1.png)
 
@@ -201,7 +195,7 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradient(lo
 
 ![](geom_fan_files/figure-markdown_github/spectral-2.png)
 
-You can also specify the intervals you want to use for `geom_fan`. If we specifiy just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
+You can also specify the intervals you want to use for `geom_fan`. If we specify just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
 
 ``` r
 ggplot(fake_df, aes(x=x, y=y)) + geom_fan(intervals=c(50,80,95)/100) +
